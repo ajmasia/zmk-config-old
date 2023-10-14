@@ -45,7 +45,7 @@
 
     sk6812_led_strip: sk6812@1 {
         compatible = "worldsemi,ws2812-spi"; // Si es compatible
-        label = "SK6812MINI";
+        label = "SK6812";
         reg = <1>;
         spi-max-frequency = <4000000>;
         chain-length = <21>;
@@ -61,7 +61,7 @@
     chosen {
         zmk,underglow = &ws2812_led_strip;
         // Si deseas tener control separado para los SK6812MINI, puedes añadir una línea similar:
-        // zmk,underglow_sk6812 = &sk6812_led_strip;
+        zmk,underglow_sk6812 = &sk6812_led_strip;
     };
 };
 
