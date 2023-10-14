@@ -1,0 +1,67 @@
+#include <dt-bindings/led/led.h>
+
+&pinctrl {
+    spi3_default: spi3_default {
+        ws2812_group: group1 {
+            psels = <NRF_PSEL(SPIM_MOSI, 0, 6)>;
+        };
+        sk6812_group: group2 {
+            psels = <NRF_PSEL(SPIM_MOSI, 0, 7)>;
+        };
+    };
+
+    spi3_sleep: spi3_sleep {
+        ws2812_group: group1 {
+            psels = <NRF_PSEL(SPIM_MOSI, 0, 6)>;
+            low-power-enable;
+        };
+        sk6812_group: group2 {
+            psels = <NRF_PSEL(SPIM_MOSI, 0, 7)>;
+            low-power-enable;
+        };
+    };
+};
+
+&spi3 {
+    compatible = "nordic,nrf-spim";
+    status = "okay";
+
+    pinctrl-0 = <&spi3_default>;
+    pinctrl-1 = <&spi3_sleep>;
+    pinctrl-names = "default", "sleep";
+
+    ws2812_led_strip: ws2812@0 {
+        compatible = "worldsemi,ws2812-spi";
+        label = "WS2812";
+        reg = <0>;
+        spi-max-frequency = <4000000>;
+        chain-length = <6>;
+        spi-one-frame = <0x70>;
+        spi-zero-frame = <0x40>;
+        color-mapping = <LED_COLOR_ID_GREEN
+                            LED_COLOR_ID_RED
+                            LED_COLOR_ID_BLUE>;
+    };
+
+    sk6812_led_strip: sk6812@1 {
+        compatible = "worldsemi,ws2812-spi"; // Si es compatible
+        label = "SK6812MINI";
+        reg = <1>;
+        spi-max-frequency = <4000000>;
+        chain-length = <21>;
+        spi-one-frame = <0x70>;
+        spi-zero-frame = <0x40>;
+        color-mapping = <LED_COLOR_ID_GREEN
+                            LED_COLOR_ID_RED
+                            LED_COLOR_ID_BLUE>;
+    };
+};
+
+/ {
+    chosen {
+        zmk,underglow = &ws2812_led_strip;
+        // Si deseas tener control separado para los SK6812MINI, puedes añadir una línea similar:
+        // zmk,underglow_sk6812 = &sk6812_led_strip;
+    };
+};
+
