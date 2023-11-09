@@ -1,0 +1,14 @@
+&spi1 {
+    compatible = "nordic,nrf-spi";
+
+    ws2812b_rgbw_strip: ws2812b_rgbw_strip@0 {
+        compatible = "worldsemi,ws2812-spi";
+        reg = <0>;
+        spi-max-frequency = <4000000>;
+        rgbw-sk6812;
+        chain-length = <48>; /* Total de LEDs: 6 Underglow + 42 Key LEDs */
+        label = "WS2812B_STRIP";
+        power-gpios = <&gpio0 15 GPIO_ACTIVE_HIGH>; /* El pin de alimentación puede variar */
+    };
+};
+
