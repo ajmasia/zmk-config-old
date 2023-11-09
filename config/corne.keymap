@@ -69,17 +69,5 @@
         led-count = <42>; /* Número de LEDs de la matriz (por tecla) */
         /* Puedes especificar el mapeo de cada LED a una tecla aquí */
     };
-};/ {
-    rgb_underglow {
-        compatible = "zmk,rgb_underglow";
-        color = <0 0 0>; /* Color inicial, usualmente apagado (negro) */
-        leds-per-driver = <6>; /* Número de LEDs Underglow */
-        /* Puedes añadir más configuraciones de efectos aquí */
-    };
-
-    rgb_matrix {
-        compatible = "zmk,rgb_matrix";
-        led-count = <42>; /* Número de LEDs de la matriz (por tecla) */
-        /* Puedes especificar el mapeo de cada LED a una tecla aquí */
-    };
 };
+
